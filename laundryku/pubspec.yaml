@@ -30,6 +30,37 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  auto_size_text: 3.0.0
+  built_collection: 5.1.1
+  built_value: ^8.4.4
+  cached_network_image: ^3.2.0
+  cloud_firestore: ^4.4.5
+  easy_debounce: ^2.0.3
+  firebase_auth: ^4.3.0
+  firebase_core: ^2.8.0
+  font_awesome_flutter: ^10.4.0
+  geocoding: ^2.0.2
+  geolocator:
+  google_fonts: ^4.0.4
+  google_maps_flutter: ^2.2.3
+  google_maps_flutter_web: ^0.4.0+5
+  google_sign_in: ^5.4.3
+  intl: 0.19.0
+  json_path: ^0.4.4
+  json_serializable: ^6.3.1
+  page_transition: ^2.0.9
+  rxdart: ^0.27.7
+  shared_preferences: ^2.0.17
+  sign_in_with_apple:
+    git:
+      url: https://github.com/asmengistu/dart_packages
+      ref: ab18d53a80e0a4bb90f1ad84f37f1b408930f28d
+      path: packages/sign_in_with_apple/sign_in_with_apple/
+  timeago: ^3.3.0
+  url_launcher: ^6.1.8
+  nanoid: ^1.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

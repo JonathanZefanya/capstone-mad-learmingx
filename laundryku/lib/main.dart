@@ -1,125 +1,258 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:laundryku/admin_received_orders/admin_received_orders_widget.dart';
+import 'package:laundryku/backend/backend.dart';
+import 'package:laundryku/enter_your_info/enter_your_info_widget.dart';
+import 'package:laundryku/welcome/welcome_widget.dart';
+import 'package:laundryku/worker_home/worker_home_widget.dart';
 
-void main() {
-  runApp(const MyApp());
+import '../flutter_flow/flutter_flow_theme.dart';
+import 'auth/auth_util.dart';
+import 'auth/firebase_user_provider.dart';
+import 'customer_my_orders/customer_my_orders_widget.dart';
+import 'home/home_widget.dart';
+import 'pricing/pricing_widget.dart';
+import 'profile/profile_widget.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late Stream<LaundrykuFirebaseUser> userStream;
+  late LaundrykuFirebaseUser initialUser;
+  bool displaySplashImage = true;
+  final authUserSub = authenticatedUserStream.listen((_) {});
+
+  @override
+  void initState() {
+    super.initState();
+    userStream = laundrykuFirebaseUserStream()..listen((user) => initialUser ?? setState(() => initialUser = user));
+    Future.delayed(Duration(seconds: 1), () => setState(() => displaySplashImage = false));
+  }
+
+  @override
+  void dispose() {
+    authUserSub.cancel();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'Laundryku',
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('en', '')],
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: initialUser == null || displaySplashImage
+          ? Container(
+              color: Colors.transparent,
+              child: Builder(
+                builder: (context) => Image.asset(
+                  'assets/images/launch_img.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+          : currentUser!.loggedIn
+              ? StreamBuilder<UsersRecord>(
+                  stream: authenticatedUserStream.cast<UsersRecord>(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            color: FlutterFlowTheme.primaryColor,
+                          ),
+                        ),
+                      );
+                    }
+                    UsersRecord? currentUserRecord = snapshot.data!;
+                    return currentUserRecord!.userType == 'Customer'
+                        ? CustomerNavBarPage(key: UniqueKey(), initialPage: 'Home')
+                        : currentUserRecord.userType == 'Worker'
+                            ? WorkerHomeWidget()
+                            : currentUserRecord.userType == 'Admin' ? AdminNavBarPage(key: UniqueKey(), initialPage: 'ReceivedOrders') : EnterYourInfoWidget();
+                  })
+              : WelcomeWidget(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class AdminNavBarPage extends StatefulWidget {
+  AdminNavBarPage({required Key key, required this.initialPage}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  final String initialPage;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _AdminNavBarPageState createState() => _AdminNavBarPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+/// This is the private State class that goes with NavBarPage.
+class _AdminNavBarPageState extends State<AdminNavBarPage> {
+  String _currentPage = 'ReceivedOrders';
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _currentPage = widget.initialPage ?? _currentPage;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    final tabs = {
+      'ReceivedOrders': AdminReceivedOrdersWidget(key: UniqueKey()),
+      'Pricing': PricingWidget(),
+      'SignOut': signOut,
+    };
+    final currentIndex = tabs.keys.toList().indexOf(_currentPage);
+    if (currentIndex == 2) {
+      signOut();
+      return WelcomeWidget();
+    } else {
+      return Scaffold(
+        backgroundColor: Colors.white,
+      body: tabs[_currentPage] as Widget,
+      bottomNavigationBar: SizedBox(
+        height: MediaQuery.of(context).size.height*0.1,
+        child: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
+          backgroundColor: Color(0xFFF0F0F0),
+          selectedItemColor: FlutterFlowTheme.primaryColor,
+          unselectedItemColor: Color(0x8A000000),
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/BatteryIcon-min.png'),
+                size: 28,
+              ),
+              label: '•',
+              tooltip: '',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/PricingIcon-min.png'),
+                size: 28,
+              ),
+              label: '•',
+              tooltip: '',
             ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/logout.png'),
+                size: 30,
+              ),
+              label: '•',
+              tooltip: '',
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+    }
+  }
+}
+
+class CustomerNavBarPage extends StatefulWidget {
+  CustomerNavBarPage({required Key key, required this.initialPage}) : super(key: key);
+
+  final String initialPage;
+
+  @override
+  _CustomerNavBarPageState createState() => _CustomerNavBarPageState();
+}
+
+/// This is the private State class that goes with NavBarPage.
+class _CustomerNavBarPageState extends State<CustomerNavBarPage> {
+  String _currentPage = 'Home';
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPage = widget.initialPage ?? _currentPage;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = {
+      'Home': HomeWidget(),
+      'CustomerMyOrders': CustomerMyOrdersWidget(),
+      'Pricing': PricingWidget(),
+      'Profile': ProfileWidget(),
+    };
+    final currentIndex = tabs.keys.toList().indexOf(_currentPage);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: tabs[_currentPage],
+      bottomNavigationBar: SizedBox(
+        height: MediaQuery.of(context).size.height*0.1,
+        child: BottomNavigationBar(
+          elevation: 0,
+          currentIndex: currentIndex,
+          onTap: (i) => setState(() => _currentPage = tabs.keys.toList()[i]),
+          backgroundColor: Color(0xFFF0F0F0),
+          selectedItemColor: FlutterFlowTheme.primaryColor,
+          unselectedItemColor: Color(0x8A000000),
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                  AssetImage('assets/images/HomeIcon-min.png'),
+                size: 28,
+              ),
+              label: '•',
+              tooltip: '',
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/BatteryIcon-min.png'),
+                size: 28,
+              ),
+              label: '•',
+              tooltip: '',
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/PricingIcon-min.png'),
+                size: 28,
+              ),
+              label: '•',
+              tooltip: '',
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/ProfileIcon-min.png'),
+                size: 28,
+              ),
+              label: '•',
+              tooltip: '',
+            )
+          ],
+        ),
+      ),
     );
   }
 }
