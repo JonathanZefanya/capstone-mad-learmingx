@@ -1,19 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:laundryku/admin_received_orders/admin_received_orders_widget.dart';
-import 'package:laundryku/backend/backend.dart';
-import 'package:laundryku/enter_your_info/enter_your_info_widget.dart';
-import 'package:laundryku/welcome/welcome_widget.dart';
-import 'package:laundryku/worker_home/worker_home_widget.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'auth/auth_util.dart';
 import 'auth/firebase_user_provider.dart';
-import 'customer_my_orders/customer_my_orders_widget.dart';
-import 'home/home_widget.dart';
-import 'pricing/pricing_widget.dart';
-import 'profile/profile_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
