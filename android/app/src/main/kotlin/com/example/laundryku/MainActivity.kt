@@ -1,4 +1,4 @@
-package com.example.laundryku
+package com.honeycumb.laundryku
 
 import io.flutter.embedding.android.FlutterActivity
 
