@@ -85,7 +85,7 @@ class _MyAppState extends State<MyApp> {
                       );
                     }
                     UsersRecord? currentUserRecord = snapshot.data!;
-                    return currentUserRecord!.userType == 'Customer'
+                    return currentUserRecord.userType == 'Customer'
                         ? CustomerNavBarPage(key: UniqueKey(), initialPage: 'Home')
                         : currentUserRecord.userType == 'Worker'
                             ? WorkerHomeWidget()
@@ -112,7 +112,7 @@ class _AdminNavBarPageState extends State<AdminNavBarPage> {
   @override
   void initState() {
     super.initState();
-    _currentPage = widget.initialPage ?? _currentPage;
+    _currentPage = widget.initialPage;
   }
 
   @override
@@ -190,7 +190,7 @@ class _CustomerNavBarPageState extends State<CustomerNavBarPage> {
   @override
   void initState() {
     super.initState();
-    _currentPage = widget.initialPage ?? _currentPage;
+    _currentPage = widget.initialPage;
   }
 
   @override

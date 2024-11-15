@@ -221,13 +221,13 @@ class _CustomerLoginWidgetState extends State<CustomerLoginWidget> {
                                       );
                                       return;
                                     }
-                                    if (phoneNumberController.text.trim().length != 10) {
+                                    if (phoneNumberController.text.trim().length < 10 || phoneNumberController.text.trim().length > 13) {
                                       setState(() => pressed = false);
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                              'Please enter a valid 10 digit Phone Number.'),
+                                              'Please enter a valid phone number (10-13 digits).'),
                                         ),
                                       );
                                       return;
