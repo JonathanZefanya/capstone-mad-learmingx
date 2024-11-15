@@ -1,5 +1,5 @@
-import 'package:laundryku/admin_login_widget/admin_login_widget.dart';
-import 'package:laundryku/worker_login/worker_login_widget.dart';
+import 'package:rinse/admin_login_widget/admin_login_widget.dart';
+import 'package:rinse/worker_login/worker_login_widget.dart';
 
 import '../customer_login/customer_login_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -82,7 +82,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                           ),
                         );
                       },
-                      text: 'Worker',
+                      text: 'Staff',
                       options: FFButtonOptions(
                         width: 200,
                         height: 40,

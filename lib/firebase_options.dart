@@ -25,9 +25,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -52,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyADa-k0P_fB6wMf0BvYl-rud-R9jAAGifo',
-    appId: '1:665224682928:android:b14dfa08b850236e3d4a75',
+    appId: '1:665224682928:android:f6991bea8b61f9c33d4a75',
     messagingSenderId: '665224682928',
     projectId: 'my-firebase-project-76e33',
     storageBucket: 'my-firebase-project-76e33.firebasestorage.app',
@@ -60,29 +66,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBHgn1UcraK-OrGf_qif97igMTMBFu-vvs',
-    appId: '1:665224682928:ios:9be3cb2ac1dacbec3d4a75',
+    appId: '1:665224682928:ios:f9fbc25d79e65efc3d4a75',
     messagingSenderId: '665224682928',
     projectId: 'my-firebase-project-76e33',
     storageBucket: 'my-firebase-project-76e33.firebasestorage.app',
-    iosBundleId: 'com.honeycumb.laundryku',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBHgn1UcraK-OrGf_qif97igMTMBFu-vvs',
-    appId: '1:665224682928:ios:9be3cb2ac1dacbec3d4a75',
-    messagingSenderId: '665224682928',
-    projectId: 'my-firebase-project-76e33',
-    storageBucket: 'my-firebase-project-76e33.firebasestorage.app',
-    iosBundleId: 'com.honeycumb.laundryku',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBMHueLFIqF7h6GFDTuRyVxjNGikUVfios',
-    appId: '1:665224682928:web:85434e75d30f9b663d4a75',
-    messagingSenderId: '665224682928',
-    projectId: 'my-firebase-project-76e33',
-    authDomain: 'my-firebase-project-76e33.firebaseapp.com',
-    storageBucket: 'my-firebase-project-76e33.firebasestorage.app',
-    measurementId: 'G-T1GHSBLXQQ',
+    iosBundleId: 'com.pratit.rinse',
   );
 }

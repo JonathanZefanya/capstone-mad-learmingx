@@ -1,10 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:rinse/admin_received_orders/admin_received_orders_widget.dart';
+import 'package:rinse/backend/backend.dart';
+import 'package:rinse/enter_your_info/enter_your_info_widget.dart';
+import 'package:rinse/welcome/welcome_widget.dart';
+import 'package:rinse/worker_home/worker_home_widget.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
 import 'auth/auth_util.dart';
 import 'auth/firebase_user_provider.dart';
+import 'customer_my_orders/customer_my_orders_widget.dart';
+import 'home/home_widget.dart';
+import 'pricing/pricing_widget.dart';
+import 'profile/profile_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,15 +29,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late Stream<LaundrykuFirebaseUser> userStream;
-  late LaundrykuFirebaseUser initialUser;
+  late Stream<RinseFirebaseUser> userStream;
+  late RinseFirebaseUser initialUser;
   bool displaySplashImage = true;
   final authUserSub = authenticatedUserStream.listen((_) {});
 
   @override
   void initState() {
     super.initState();
-    userStream = laundrykuFirebaseUserStream()..listen((user) => initialUser ?? setState(() => initialUser = user));
+    userStream = rinseFirebaseUserStream()..listen((user) => initialUser);
     Future.delayed(Duration(seconds: 1), () => setState(() => displaySplashImage = false));
   }
 
@@ -42,7 +51,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Laundryku',
+      title: 'LaundryKu',
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -50,7 +59,7 @@ class _MyAppState extends State<MyApp> {
       ],
       supportedLocales: const [Locale('en', '')],
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: initialUser == null || displaySplashImage
+      home: displaySplashImage
           ? Container(
               color: Colors.transparent,
               child: Builder(
@@ -166,7 +175,7 @@ class _AdminNavBarPageState extends State<AdminNavBarPage> {
 }
 
 class CustomerNavBarPage extends StatefulWidget {
-  CustomerNavBarPage({required Key key, required this.initialPage}) : super(key: key);
+  CustomerNavBarPage({Key? key, required this.initialPage}) : super(key: key);
 
   final String initialPage;
 
