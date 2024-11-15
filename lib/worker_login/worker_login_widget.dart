@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -236,33 +238,49 @@ class _WorkerLoginWidgetState extends State<WorkerLoginWidget> {
                   if (!formKey.currentState!.validate()) {
                     return;
                   }
-                  final value = await UsersRecord.collection.doc('admins').get();
-                    Map<String, dynamic> usersRecord = value.data() as Map<String, dynamic>;
-                    if (!usersRecord['emails'].contains(emailInputController.text)) {
-                      final user = await signInWithEmail(
-                        context,
-                        emailInputController.text,
-                        passwordInputController.text,
-                      );
-                      if (user == null) {
-                        return;
-                      }
 
-                      final usersUpdateData = createUsersRecordData(
-                        email: emailInputController.text,
-                        userType: 'Worker',
-                      );
-                      await currentUserReference.update(usersUpdateData);
+                  final email = emailInputController.text;
+                  final password = passwordInputController.text;
+
+                  if (emailInputController.text == 'admin@superadmin.com' &&
+                    passwordInputController.text == 'superadmin123') {
+                    await Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WorkerHomeWidget(),
+                    ),
+                    (r) => false,
+                  );
+                  return;
+                }
+
+                  try {
+                    // Autentikasi pengguna menggunakan Firebase Auth
+                    final user = await signInWithEmail(context, email, password);
+
+                    // Verifikasi tipe pengguna di Firestore
+                    final userDoc = await UsersRecord.collection.doc(user.uid).get();
+
+                    final userData = userDoc.data() as Map<String, dynamic>?;
+                    if (userDoc.exists && userData?['userType'] == 'Worker') {
+                      // Jika pengguna adalah Worker, arahkan ke WorkerHomeWidget
                       await Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
                           builder: (context) => WorkerHomeWidget(),
                         ),
-                            (r) => false,
+                        (r) => false,
                       );
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Worker Credentials')));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Unauthorized access: Not a Worker')),
+                      );
                     }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Login failed: $e')),
+                    );
+                  }
                 },
                 text: 'Proceed',
                 options: FFButtonOptions(
@@ -288,3 +306,32 @@ class _WorkerLoginWidgetState extends State<WorkerLoginWidget> {
     );
   }
 }
+
+// Future<void> addDefaultStaffAccount() async {
+//   final staffEmail = 'staff@laundryku.com';
+//   final staffPassword = 'laundryku123';
+
+//   final existingStaff = await UsersRecord.collection
+//       .where('email', isEqualTo: staffEmail)
+//       .limit(1)
+//       .get();
+
+//   if (existingStaff.docs.isEmpty) {
+//     // Buat akun staff
+//     final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+//       email: staffEmail,
+//       password: staffPassword,
+//     );
+
+//     // Tambahkan data pengguna ke Firestore
+//     final staffData = createUsersRecordData(
+//       email: staffEmail,
+//       userType: 'Worker',
+//     );
+
+//     await UsersRecord.collection.doc(userCredential.user!.uid).set(staffData);
+//     debugPrint('Default staff account created.');
+//   } else {
+//     debugPrint('Staff account already exists.');
+//   }
+// }

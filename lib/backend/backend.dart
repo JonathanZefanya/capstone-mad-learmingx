@@ -103,7 +103,7 @@ Stream<List<T>> queryCollection<T>(
     {required Query Function(Query) queryBuilder,
     int limit = -1,
     bool singleRecord = false}) {
-  final builder = queryBuilder ?? (q) => q;
+  final builder = queryBuilder;
   var query = builder(collection);
   if (limit > 0 || singleRecord) {
     query = query.limit(singleRecord ? 1 : limit);
@@ -126,7 +126,7 @@ Future<List<T>> queryCollectionOnce<T>(
     {required Query Function(Query) queryBuilder,
     int limit = -1,
     bool singleRecord = false}) {
-  final builder = queryBuilder ?? (q) => q;
+  final builder = queryBuilder;
   var query = builder(collection);
   if (limit > 0 || singleRecord) {
     query = query.limit(singleRecord ? 1 : limit);

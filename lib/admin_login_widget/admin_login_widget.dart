@@ -246,7 +246,7 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget> {
                     MaterialPageRoute(
                       builder: (context) => AdminNavBarPage(
                         key: UniqueKey(),
-                        initialPage: 'home',
+                        initialPage: 'ReceivedOrders',
                       ),
                     ),
                     (r) => false,
@@ -269,7 +269,7 @@ class _AdminLoginWidgetState extends State<AdminLoginWidget> {
                         MaterialPageRoute(
                           builder: (context) => AdminNavBarPage(
                             key: UniqueKey(),
-                            initialPage: 'home',
+                            initialPage: 'ReceivedOrders',
                           ),
                         ),
                             (r) => false,

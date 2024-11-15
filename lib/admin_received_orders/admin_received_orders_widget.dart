@@ -10,7 +10,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 
 class AdminReceivedOrdersWidget extends StatefulWidget {
-  const AdminReceivedOrdersWidget({required Key key}) : super(key: key);
+  const AdminReceivedOrdersWidget({Key? key}) : super(key: key);
 
   @override
   _AdminReceivedOrdersWidgetState createState() => _AdminReceivedOrdersWidgetState();
@@ -212,6 +212,7 @@ class _AdminReceivedOrdersWidgetState extends State<AdminReceivedOrdersWidget> {
                                         ),
                                       ),
                                       Visibility(
+                                        // ignore: unnecessary_null_comparison
                                         visible: _ordersRecords[index].assignedWorker != null,
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -497,7 +498,7 @@ class _AdminReceivedOrdersWidgetState extends State<AdminReceivedOrdersWidget> {
                                         ),
                                       ),
                                       Visibility(
-                                        visible: _ordersRecords[index].assignedWorker != null && _ordersRecords[index].adminOrderStatus == 'Received',
+                                        visible: _ordersRecords[index].adminOrderStatus == 'Received',
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment: MainAxisAlignment.center,

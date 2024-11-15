@@ -1,6 +1,5 @@
 import 'package:rinse/backend/backend.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 
 import 'flutter_flow/lat_lng.dart';
 

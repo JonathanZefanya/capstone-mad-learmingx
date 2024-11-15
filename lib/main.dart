@@ -97,7 +97,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class AdminNavBarPage extends StatefulWidget {
-  AdminNavBarPage({required Key key, required this.initialPage}) : super(key: key);
+  AdminNavBarPage({required Key key,  this.initialPage = "ReceivedOrders"}) : super(key: key);
 
   final String initialPage;
 
