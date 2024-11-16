@@ -86,7 +86,7 @@ class _OrderDeliveredToCustomerWidgetState
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
                               child: Text(
-                                '₹127.00',
+                                'Rp.127.00',
                                 style: FlutterFlowTheme.bodyText1.override(
                                   fontFamily: 'Lato',
                                   color: Color(0xFF818181),

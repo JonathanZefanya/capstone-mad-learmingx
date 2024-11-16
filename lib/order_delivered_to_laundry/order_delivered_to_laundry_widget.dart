@@ -106,7 +106,7 @@ class _OrderDeliveredToLaundryWidgetState
                                   padding:
                                       EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
                                   child: Text(
-                                    '₹${snapshot.data!.totalCost}',
+                                    'Rp.${snapshot.data!.totalCost}',
                                     style: FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lato',
                                       color: Color(0xFF818181),

@@ -83,7 +83,7 @@ class _ClothesListTabWidgetState extends State<ClothesListTabWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      '₹ ${widget.pricePerPiece.toString()}',
+                      'Rp. ${widget.pricePerPiece.toString()}',
                       style: FlutterFlowTheme.bodyText1.override(
                         fontFamily: 'Lato',
                         color: Color(0xFF818181),

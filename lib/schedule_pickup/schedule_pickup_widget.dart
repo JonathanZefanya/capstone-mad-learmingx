@@ -148,7 +148,7 @@ class _SchedulePickupWidgetState extends State<SchedulePickupWidget> {
                               child: Text(
                                 FFAppState().deliveryAddress.replaceAll(' | ', '').trim() != ''
                                     ? FFAppState().deliveryAddress
-                                    : FFAppState().homeAddress.replaceAll(' | ', '').trim() ?? 'Satsang Tower Near XYZ\nRoad no. 12 Xyz .\nChembur - 400071',
+                                    : FFAppState().homeAddress.replaceAll(' | ', '').trim(),
                                 style: FlutterFlowTheme.bodyText1.override(
                                   fontFamily: 'Lato',
                                   color: Color(0xE5494949),
@@ -208,7 +208,7 @@ class _SchedulePickupWidgetState extends State<SchedulePickupWidget> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.12,
+              height: MediaQuery.of(context).size.height * 0.15,
               decoration: BoxDecoration(
                 color: Colors.transparent,
               ),

@@ -216,7 +216,7 @@ class _AcceptOrderDetailsWidgetState extends State<AcceptOrderDetailsWidget> {
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(20, 5, 0, 0),
                                   child: Text(
-                                    '₹ ${snapshot.data!.totalCost}',
+                                    'Rp. ${snapshot.data!.totalCost}',
                                     style: FlutterFlowTheme.bodyText1.override(
                                       fontSize: 14,
                                       // fontWeight: FontWeight.normal,
@@ -350,7 +350,7 @@ class _AcceptOrderDetailsWidgetState extends State<AcceptOrderDetailsWidget> {
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 10),
                                             child: Text(
-                                              '₹ $entry',
+                                              'Rp. $entry',
                                               style: FlutterFlowTheme.bodyText1.override(
                                                 fontSize: 14,
                                                 // fontWeight: FontWeight.normal,
@@ -420,7 +420,7 @@ class _AcceptOrderDetailsWidgetState extends State<AcceptOrderDetailsWidget> {
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 25, 10),
                                             child: Text(
-                                              '₹ ${entry[0] * entry[1]}',
+                                              'Rp. ${entry[0] * entry[1]}',
                                               style: FlutterFlowTheme.bodyText1.override(
                                                 fontSize: 14,
                                                 // fontWeight: FontWeight.normal,

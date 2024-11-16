@@ -216,7 +216,7 @@ class _CustomerMyOrdersWidgetState extends State<CustomerMyOrdersWidget> {
                                                       Padding(
                                                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
                                                         child: Text(
-                                                          '₹${_ordersRecords[index].totalCost}',
+                                                          'Rp.${_ordersRecords[index].totalCost}',
                                                           style: FlutterFlowTheme.bodyText1.override(
                                                             fontFamily: 'Lato',
                                                             color: Color(0xFF818181),

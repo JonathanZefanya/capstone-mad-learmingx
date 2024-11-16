@@ -182,7 +182,7 @@ class _CustomerOrderDetailsWidgetState extends State<CustomerOrderDetailsWidget>
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(20, 5, 0, 0),
                         child: Text(
-                          '₹ $_total',
+                          'Rp. $_total',
                           style: FlutterFlowTheme.bodyText1.override(
                             fontFamily: 'Lato',
                             color: FlutterFlowTheme.secondaryColor,
@@ -296,7 +296,7 @@ class _CustomerOrderDetailsWidgetState extends State<CustomerOrderDetailsWidget>
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 10),
                                   child: Text(
-                                    '₹ $entry',
+                                    'Rp. $entry',
                                     style: FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lato',
                                       color: FlutterFlowTheme.secondaryColor,
@@ -350,7 +350,7 @@ class _CustomerOrderDetailsWidgetState extends State<CustomerOrderDetailsWidget>
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 25, 10),
                                   child: Text(
-                                    '₹ $entry',
+                                    'Rp. $entry',
                                     style: FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lato',
                                       color: FlutterFlowTheme.secondaryColor,
@@ -388,7 +388,7 @@ class _CustomerOrderDetailsWidgetState extends State<CustomerOrderDetailsWidget>
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 25, 15),
                             child: Text(
-                              '₹ $_total',
+                              'Rp. $_total',
                               style: FlutterFlowTheme.bodyText1.override(
                                 fontFamily: 'Lato',
                                 color: FlutterFlowTheme.secondaryColor,
