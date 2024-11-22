@@ -1,6 +1,6 @@
 {
-    "name": "laundryku",
-    "short_name": "laundryku",
+    "name": "pelayanan_laundri",
+    "short_name": "pelayanan_laundri",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
